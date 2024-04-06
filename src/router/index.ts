@@ -5,7 +5,7 @@ const router = Router();
 
 const taskControllers = new TaskController();
 
-router.get("/", taskControllers.getTask);
+router.get("/showTask", taskControllers.getTask);
 
 router.post("/", taskControllers.created);
 
