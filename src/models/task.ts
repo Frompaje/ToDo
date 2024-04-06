@@ -19,7 +19,6 @@ export class Tasks {
   async createTask(input: iTask) {
     if (input.title == "" && input.description == "") {
       return;
-      console.log("não foi possivel criar sua tesk");
     }
     if (input.title.length > 36 && input.description.length > 36) {
       return;
