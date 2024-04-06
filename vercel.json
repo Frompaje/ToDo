@@ -1,0 +1,16 @@
+{
+  "version":2,
+  "builds":[
+    {
+      "src":"./dist/api.cjs",
+      "use":"@now/node"
+    }
+  ],
+  "routes":[
+  {
+    "src":"(.*)",
+    "dest":"/dist/api.cjs"
+  }
+  ]
+
+}
