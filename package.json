@@ -7,8 +7,7 @@
   "scripts": {
     "start":"node dist/api.cjs",
     "dev": "tsx --watch src/api.ts",
-    "build":"tsc src/api.ts",
-    "vercel-build":"echo hello"
+    "build":"tsup dist/api.cjs"
   },
   "keywords": [],
   "author": "",
