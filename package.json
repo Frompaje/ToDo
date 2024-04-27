@@ -5,9 +5,9 @@
   "main": "database.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/api.cjs",
-    "dev": "tsx --watch src/api.ts",
-    "build": "tsup dist/api.cjs"
+    "start": "node dist/server.cjs",
+    "dev": "tsx --watch src/server.ts",
+    "build": "tsup dist/server.cjs"
   },
   "keywords": [],
   "author": "",
