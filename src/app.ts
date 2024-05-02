@@ -1,6 +1,9 @@
 import fastify, { FastifyInstance } from "fastify";
-import { routerUser } from "./http/router/user-router";
+import { createTaskController } from "./controllers/create-task-controller";
+import { createUserController } from "./controllers/create-user-controller";
 
 export const app: FastifyInstance = fastify();
 
-app.register(routerUser);
+app.post("/task", createTaskController);
+
+app.post("/user", createUserController);

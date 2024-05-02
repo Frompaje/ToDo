@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "database.js",
-  "type": "module",
   "scripts": {
     "start": "node dist/server.cjs",
     "dev": "tsx --watch src/server.ts",
