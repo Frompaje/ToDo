@@ -15,14 +15,5 @@ export async function createTaskController(
 
   const { title, description, status, userId } = taskSchema.parse(request.body);
 
-  await prisma.task.create({
-    data: {
-      title,
-      description,
-      status,
-      userId,
-    },
-  });
-
   return reply.status(201).send();
 }
