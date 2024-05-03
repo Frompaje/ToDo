@@ -1,4 +1,5 @@
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
+import { CreateUserUseCase } from "@/useCase/create-user-usecase";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -12,8 +13,11 @@ export async function createUserController(
   });
 
   const { password, email } = userSchema.parse(request.body);
-  const userRepository = new PrismaUserRepository();
 
-  const user = await userRepository.create(password, email);
-  return reply.status(201).send({ user });
+  const userRepository = new PrismaUserRepository();
+  const createUseCase = new CreateUserUseCase(userRepository);
+
+  const { user } = await createUseCase.execute({ password, email });
+
+  return reply.status(201).send(user);
 }
