@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance } from "fastify";
-import { createTaskController } from "./controllers/create-task-controller";
-import { createUserController } from "./controllers/create-user-controller";
+import { createTaskController } from "./controllers/task/create-task-controller";
+import { createUserController } from "./controllers/user/create-user-controller";
 
 export const app: FastifyInstance = fastify();
 

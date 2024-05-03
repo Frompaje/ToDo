@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { prisma } from "../database/db";
+import { prisma } from "../../database/db";
 import { z } from "zod";
 
 export async function createTaskController(
@@ -20,7 +20,7 @@ export async function createTaskController(
       title,
       description,
       status,
-      userId: userId,
+      userId,
     },
   });
 
