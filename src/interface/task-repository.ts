@@ -1,5 +1,5 @@
 export interface TaskResitory {
-  return(id: string): Promise<Task>;
+  returnAllTask(userId: string): Promise<Task>;
 
   findById(id: string): Promise<Task>;
 

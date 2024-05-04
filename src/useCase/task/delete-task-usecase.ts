@@ -11,11 +11,11 @@ export class DeleteTaskUseCase {
     const task = await this.taskRepository.findById(taskId);
     const user = await this.userRepository.findById(userId);
 
-    if (!user) {
-      throw new Error("User does not exist");
-    }
     if (!task) {
       throw new Error("Task does not exist");
+    }
+    if (!user) {
+      throw new Error("User does not exist");
     }
 
     const taskDelete = await this.taskRepository.delete(userId, taskId);

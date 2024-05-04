@@ -11,10 +11,10 @@ export class PrismaTaskRepository implements TaskResitory {
     return user;
   }
 
-  async return(id: string): Promise<any> {
-    const task = await prisma.task.findFirst({
+  async returnAllTask(userId: string): Promise<any> {
+    const task = await prisma.task.findMany({
       where: {
-        id,
+        userId,
       },
     });
     return task;
