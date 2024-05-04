@@ -13,9 +13,14 @@ export async function deleteUserController(
 
   const { id } = userSchema.parse(request.body);
 
-  const userRepository = new PrismaUserRepository();
-  const deleteUser = new DeleteUserUseCase(userRepository);
-  const user = await deleteUser.execute({ id });
-  console.log(user);
-  return reply.status(200).send({ user });
+  try {
+    const userRepository = new PrismaUserRepository();
+    const deleteUser = new DeleteUserUseCase(userRepository);
+    const user = await deleteUser.execute({ id });
+    console.log(user);
+    return reply.status(200).send({ user });
+  } catch (error) {
+    console.log(error);
+    return reply.status(500).send();
+  }
 }

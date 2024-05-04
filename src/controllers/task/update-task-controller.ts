@@ -18,11 +18,10 @@ export async function updateTaskController(
   const { userId, taskId, title, description, status } = taskSchema.parse(
     request.body
   );
-  const taskRepository = new PrismaTaskRepository();
-  const taskUpdate = new UpdateTaskUseCase(taskRepository);
-  await taskUpdate.execute(userId, taskId, title, description, status);
-
   try {
+    const taskRepository = new PrismaTaskRepository();
+    const taskUpdate = new UpdateTaskUseCase(taskRepository);
+    await taskUpdate.execute(userId, taskId, title, description, status);
     return reply.status(200).send({});
   } catch (error) {
     console.log(error);

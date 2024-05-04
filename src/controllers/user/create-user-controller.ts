@@ -12,12 +12,17 @@ export async function createUserController(
     password: z.string(),
   });
 
-  const { email, password } = userSchema.parse(request.body);
+  try {
+    const { email, password } = userSchema.parse(request.body);
 
-  const userRepository = new PrismaUserRepository();
-  const createUseCase = new CreateUserUseCase(userRepository);
+    const userRepository = new PrismaUserRepository();
+    const createUseCase = new CreateUserUseCase(userRepository);
 
-  const { user } = await createUseCase.execute({ email, password });
+    const { user } = await createUseCase.execute({ email, password });
 
-  return reply.status(201).send(user);
+    return reply.status(201).send(user);
+  } catch (error) {
+    console.log(error);
+    return reply.status(500).send();
+  }
 }
