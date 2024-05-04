@@ -24,7 +24,9 @@ export async function updateTaskController(
     await taskUpdate.execute(userId, taskId, title, description, status);
     return reply.status(200).send({});
   } catch (error) {
-    console.log(error);
-    return reply.status(500).send();
+    if (error instanceof z.ZodError) {
+      return reply.status(400).send(error.issues);
+    }
+    return reply.status(400).send(error);
   }
 }

@@ -22,7 +22,6 @@ export async function deleteTaskController(
 
     return reply.status(200).send({});
   } catch (error) {
-    console.log(error);
-    return reply.status(500).send();
+    return reply.status(400).send(error);
   }
 }

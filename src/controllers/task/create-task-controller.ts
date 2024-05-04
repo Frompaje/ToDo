@@ -29,6 +29,9 @@ export async function createTaskController(
     });
     return reply.status(201).send(task);
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return reply.status(400).send(error.issues);
+    }
     return reply.status(400).send(error);
   }
 }
