@@ -1,32 +1,31 @@
 import { prisma } from "@/database/db";
-import { TaskResitory } from "@/interface/task-repository";
+import { Task, TaskResitory } from "@/interface/task-repository";
 
 export class PrismaTaskRepository implements TaskResitory {
-  async create(email: string, password: string): Promise<User> {
-    const user = await prisma.user.create({
+  async create(
+    title: string,
+    description: string,
+    status: string,
+    userId: string
+  ): Promise<Task> {
+    const task = await prisma.task.create({
       data: {
-        email,
-        password,
+        title,
+        description,
+        status,
+        userId,
       },
     });
-    return user;
+    return task;
   }
 
-  // TODOO
-  async delete(userId: string, userTask: string): Promise<User> {
-    const user = {
-      id: "dsaklhduias",
-      email: "dsaklhduias",
-      password: "dsaklhduias",
-      created_at: new Date(),
-    };
-    return user;
+  async delete(userId: string, userTask: string): Promise<Task> {
+    const task = await prisma.task.delete({
+      where: {
+        id: userTask,
+        userId,
+      },
+    });
+    return task;
   }
 }
-
-export type User = {
-  id: string;
-  email: string;
-  password: string;
-  created_at: Date;
-};

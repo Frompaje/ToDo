@@ -12,12 +12,12 @@ export async function createUserController(
     password: z.string(),
   });
 
-  const { password, email } = userSchema.parse(request.body);
+  const { email, password } = userSchema.parse(request.body);
 
   const userRepository = new PrismaUserRepository();
   const createUseCase = new CreateUserUseCase(userRepository);
 
-  const { user } = await createUseCase.execute({ password, email });
+  const { user } = await createUseCase.execute({ email, password });
 
   return reply.status(201).send(user);
 }

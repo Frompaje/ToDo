@@ -1,11 +1,19 @@
 export interface TaskResitory {
-  create(email: string, password: string): Promise<User>;
-  delete(userId: string, userTask: string): Promise<User>;
+  create(
+    userId: string,
+    title: string,
+    description: string,
+    status: string
+  ): Promise<Task>;
+  delete(userId: string, userTask: string): Promise<Task>;
 }
 
-export type User = {
+export type Task = {
   id: string;
-  email: string;
-  password: string;
+  title: string;
+  description: string;
+  status: string;
   created_at: Date;
+  updated_at: Date;
+  userId: string;
 };
