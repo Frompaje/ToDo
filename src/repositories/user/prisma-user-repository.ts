@@ -2,11 +2,36 @@ import { prisma } from "@/database/db";
 import { UserRepository } from "@/interface/user-repository";
 
 export class PrismaUserRepository implements UserRepository {
-  async create(email: string, password: string) {
+  async findById(id: string) {
+    const userExist = await prisma.user.findFirst({
+      where: { id },
+    });
+
+    if (!userExist) {
+      return undefined;
+    }
+
+    return userExist;
+  }
+  async findByEmail(email: string) {
+    const userExist = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!userExist) {
+      return undefined;
+    }
+
+    return userExist;
+  }
+
+  async create(email: string, name: string) {
     const user = await prisma.user.create({
       data: {
         email,
-        password,
+        name,
       },
     });
     return user;

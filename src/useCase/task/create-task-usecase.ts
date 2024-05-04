@@ -1,14 +1,18 @@
 import { TaskResitory } from "@/interface/task-repository";
+import { UserRepository } from "@/interface/user-repository";
 
 export class CreateTaskUseCase {
-  constructor(private taskRepository: TaskResitory) {}
+  constructor(
+    private taskRepository: TaskResitory,
+    private userRepository: UserRepository
+  ) {}
 
   async execute({ title, description, status, userId }: Input) {
-    if (!userId || !title || !description || !status) {
-      throw new Error(
-        "id, title, description, status is not exist, fill in all the fields"
-      );
+    const userExist = await this.userRepository.findById(userId);
+    if (!userExist) {
+      throw new Error("User already exists");
     }
+
     const task = await this.taskRepository.create(
       title,
       description,

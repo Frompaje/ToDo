@@ -3,20 +3,20 @@ import { User, UserRepository } from "@/interface/user-repository";
 export class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute({ email, password }: Input): Promise<Output> {
-    const userPassword = "95f5afa1-444d-4659-9013-099adf2beda7";
-    if (password !== userPassword) {
-      throw new Error("password is not exist");
-    }
+  async execute({ email, name }: Input): Promise<Output> {
+    const userExist = await this.userRepository.findByEmail(email);
 
-    const user = await this.userRepository.create(email, password);
+    if (userExist) {
+      throw new Error("Email already exists");
+    }
+    const user = await this.userRepository.create(email, name);
     return { user };
   }
 }
 
 type Input = {
   email: string;
-  password: string;
+  name: string;
 };
 
 type Output = {

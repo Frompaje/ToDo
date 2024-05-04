@@ -9,20 +9,23 @@ export async function createUserController(
 ) {
   const userSchema = z.object({
     email: z.string().email(),
-    password: z.string(),
+    name: z.string().min(2).max(30),
   });
 
   try {
-    const { email, password } = userSchema.parse(request.body);
+    const { email, name } = userSchema.parse(request.body);
 
     const userRepository = new PrismaUserRepository();
     const createUseCase = new CreateUserUseCase(userRepository);
 
-    const { user } = await createUseCase.execute({ email, password });
+    const { user } = await createUseCase.execute({ email, name });
 
     return reply.status(201).send(user);
   } catch (error) {
-    console.log(error);
-    return reply.status(500).send();
+    if (error instanceof z.ZodError) {
+      return reply.status(400).send(error.issues);
+    }
+
+    return reply.status(400).send(error);
   }
 }
