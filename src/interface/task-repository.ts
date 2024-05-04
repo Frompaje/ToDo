@@ -1,4 +1,5 @@
 export interface TaskResitory {
+  return(taskId: string): Promise<Task>;
   create(
     userId: string,
     title: string,
