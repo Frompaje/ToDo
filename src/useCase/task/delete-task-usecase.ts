@@ -1,16 +1,24 @@
 import { Task, TaskResitory } from "@/interface/task-repository";
+import { UserRepository } from "@/interface/user-repository";
 
 export class DeleteTaskUseCase {
-  constructor(private taskRepository: TaskResitory) {}
+  constructor(
+    private taskRepository: TaskResitory,
+    private userRepository: UserRepository
+  ) {}
 
-  async execute(userId: string, userTask: string): Promise<Task> {
-    const user = await this.taskRepository.findById(userId);
+  async execute(userId: string, taskId: string): Promise<Task> {
+    const task = await this.taskRepository.findById(taskId);
+    const user = await this.userRepository.findById(userId);
 
     if (!user) {
-      throw new Error("User doe not exist");
+      throw new Error("User does not exist");
+    }
+    if (!task) {
+      throw new Error("Task does not exist");
     }
 
-    const taskDelete = await this.taskRepository.delete(userId, userTask);
+    const taskDelete = await this.taskRepository.delete(userId, taskId);
     return taskDelete;
   }
 }

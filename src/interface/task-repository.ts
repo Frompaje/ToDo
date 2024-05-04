@@ -1,15 +1,15 @@
 export interface TaskResitory {
-  return(taskId: string): Promise<Task>;
+  return(id: string): Promise<Task>;
 
   findById(id: string): Promise<Task>;
 
   create(
-    userId: string,
+    id: string,
     title: string,
     description: string,
     status: string
   ): Promise<Task>;
-  delete(userId: string, userTask: string): Promise<Task>;
+  delete(userId: string, taskId: string): Promise<Task>;
   update(
     userId: string,
     taskId: string,

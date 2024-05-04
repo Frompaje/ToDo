@@ -23,6 +23,6 @@ export async function deleteUserController(
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);
     }
-    return reply.status(400).send();
+    return reply.status(400).send(error);
   }
 }

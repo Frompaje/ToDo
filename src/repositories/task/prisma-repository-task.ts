@@ -11,10 +11,10 @@ export class PrismaTaskRepository implements TaskResitory {
     return user;
   }
 
-  async return(taskId: string): Promise<any> {
+  async return(id: string): Promise<any> {
     const task = await prisma.task.findFirst({
       where: {
-        id: taskId,
+        id,
       },
     });
     return task;
@@ -36,10 +36,10 @@ export class PrismaTaskRepository implements TaskResitory {
     return task;
   }
 
-  async delete(userId: string, userTask: string): Promise<Task> {
+  async delete(userId: string, taskId: string): Promise<Task> {
     const task = await prisma.task.delete({
       where: {
-        id: userTask,
+        id: taskId,
         userId,
       },
     });

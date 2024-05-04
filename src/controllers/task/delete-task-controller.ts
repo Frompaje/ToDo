@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { PrismaTaskRepository } from "@/repositories/task/prisma-repository-task";
 import { DeleteTaskUseCase } from "@/useCase/task/delete-task-usecase";
+import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
 
 export async function deleteTaskController(
   request: FastifyRequest,
@@ -16,12 +17,16 @@ export async function deleteTaskController(
 
   try {
     const taskRepository = new PrismaTaskRepository();
-    const taskDelete = new DeleteTaskUseCase(taskRepository);
+    const userRepository = new PrismaUserRepository();
+    const taskDelete = new DeleteTaskUseCase(taskRepository, userRepository);
 
     await taskDelete.execute(userId, taskId);
 
-    return reply.status(200).send({});
+    return reply.status(200).send();
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return reply.status(400).send(error.issues);
+    }
     return reply.status(400).send(error);
   }
 }

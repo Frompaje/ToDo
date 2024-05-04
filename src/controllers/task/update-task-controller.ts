@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { PrismaTaskRepository } from "@/repositories/task/prisma-repository-task";
 import { UpdateTaskUseCase } from "@/useCase/task/update-task-usecase";
+import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
 
 export async function updateTaskController(
   request: FastifyRequest,
@@ -20,7 +21,8 @@ export async function updateTaskController(
   );
   try {
     const taskRepository = new PrismaTaskRepository();
-    const taskUpdate = new UpdateTaskUseCase(taskRepository);
+    const userRepository = new PrismaUserRepository();
+    const taskUpdate = new UpdateTaskUseCase(taskRepository, userRepository);
     await taskUpdate.execute(userId, taskId, title, description, status);
     return reply.status(200).send({});
   } catch (error) {
