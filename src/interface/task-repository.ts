@@ -6,6 +6,13 @@ export interface TaskResitory {
     status: string
   ): Promise<Task>;
   delete(userId: string, userTask: string): Promise<Task>;
+  update(
+    userId: string,
+    taskId: string,
+    title: string,
+    description: string,
+    status: string
+  ): Promise<Task>;
 }
 
 export type Task = {

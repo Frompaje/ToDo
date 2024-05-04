@@ -28,4 +28,25 @@ export class PrismaTaskRepository implements TaskResitory {
     });
     return task;
   }
+
+  async update(
+    userId: string,
+    taskId: string,
+    title: string,
+    description: string,
+    status: string
+  ): Promise<Task> {
+    const task = await prisma.task.update({
+      where: {
+        userId,
+        id: taskId,
+      },
+      data: {
+        title,
+        description,
+        status,
+      },
+    });
+    return task;
+  }
 }
