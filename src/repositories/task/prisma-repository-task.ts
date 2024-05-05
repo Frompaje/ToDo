@@ -3,15 +3,15 @@ import { Task, TaskResitory } from "@/interface/task-repository";
 
 export class PrismaTaskRepository implements TaskResitory {
   async findById(id: string): Promise<any> {
-    const user = await prisma.task.findFirst({
+    const user = await prisma.task.findUnique({
       where: {
-        id: id,
+        id,
       },
     });
     return user;
   }
 
-  async returnAllTask(userId: string): Promise<any> {
+  async returnAllTasks(userId: string): Promise<any> {
     const task = await prisma.task.findMany({
       where: {
         userId,

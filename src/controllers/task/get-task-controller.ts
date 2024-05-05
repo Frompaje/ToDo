@@ -13,8 +13,7 @@ export async function getTaskController(
       userId: z.string(),
     });
 
-    const { userId } = taskSchema.parse(request.query);
-
+    const { userId } = taskSchema.parse(request.params);
     const taskRepository = new PrismaTaskRepository();
     const userRepository = new PrismaUserRepository();
 

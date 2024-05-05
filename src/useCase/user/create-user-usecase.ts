@@ -5,7 +5,6 @@ export class CreateUserUseCase {
 
   async execute({ email, name }: Input): Promise<Output> {
     const userExist = await this.userRepository.findByEmail(email);
-
     if (userExist) {
       throw new Error("Email already exists");
     }
@@ -22,3 +21,6 @@ type Input = {
 type Output = {
   user: User;
 };
+function sendEmail() {
+  throw new Error("Function not implemented.");
+}

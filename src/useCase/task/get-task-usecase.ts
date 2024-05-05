@@ -8,15 +8,13 @@ export class GetTaskUseCase {
   ) {}
 
   async execute(userId: string): Promise<Task> {
-    const user = await this.userRepository.findById(userId);
-
-    if (!user) {
+    const userExist = await this.userRepository.findById(userId);
+    if (!userExist) {
       throw new Error("User does not exist");
     }
 
-    const tasks = await this.taskRepository.returnAllTask(userId);
-    return tasks;
+    const taskUser = await this.taskRepository.returnAllTasks(userId);
+
+    return taskUser;
   }
 }
-
-// todo task pegar pelo id

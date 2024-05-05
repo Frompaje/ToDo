@@ -1,3 +1,4 @@
+import { PrismaTaskRepository } from "@/repositories/task/prisma-repository-task";
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
 import { DeleteUserUseCase } from "@/useCase/user/delete-user-usecase";
 import { FastifyReply, FastifyRequest } from "fastify";
@@ -16,9 +17,10 @@ export async function deleteUserController(
   try {
     const userRepository = new PrismaUserRepository();
     const deleteUser = new DeleteUserUseCase(userRepository);
+
     const user = await deleteUser.execute({ id });
 
-    return reply.status(200).send({ user });
+    return reply.status(200).send(user);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);

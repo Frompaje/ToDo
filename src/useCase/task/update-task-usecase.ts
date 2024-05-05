@@ -15,11 +15,13 @@ export class UpdateTaskUseCase {
     status: string
   ): Promise<Task> {
     const user = await this.userRepository.findById(userId);
-    const task = await this.taskRepository.findById(taskId);
 
     if (!user) {
       throw new Error("User does not exist");
     }
+
+    const task = await this.taskRepository.findById(taskId);
+
     if (!task) {
       throw new Error("Task does not exist");
     }
