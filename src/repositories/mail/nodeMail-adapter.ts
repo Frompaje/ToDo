@@ -22,7 +22,8 @@ export class MailAdapter implements MailRepository {
       to: `${email}`,
       subject: "Espero que este e-mail o encontre bem.",
       html: `<p>Quero aproveitar esta oportunidade para expressar minha sincera gratidão por escolher usar o Todoo em sua rotina diária.  Para facilitar ainda mais sua experiência com o Todoo, estou encaminhando seu token de acesso exclusivo. </p>
-  <H1>${token}</H1>`,
+  <H1>${token}</H1>
+  <p>Não responda esse Email.`,
     });
   }
 }

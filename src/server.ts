@@ -1,5 +1,5 @@
 import { app } from "./app";
-import { env } from "./controllers/env";
+import { env } from "./env";
 
 app.listen(
   {

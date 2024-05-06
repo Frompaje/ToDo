@@ -1,10 +1,10 @@
 import "dotenv/config";
+import { env } from "./env";
 import cors from "@fastify/cors";
 import fastify, { FastifyInstance } from "fastify";
 import fastifyJwt from "@fastify/jwt";
 import { routerUserController } from "./controllers/user/router-user-controller";
 import { routerTaskController } from "./controllers/task/router-task.controller";
-import { env } from "./controllers/env";
 
 export const app: FastifyInstance = fastify();
 
