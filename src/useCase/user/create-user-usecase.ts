@@ -1,4 +1,5 @@
 import { User, UserRepository } from "@/interface/user-repository";
+import { sendEmail } from "@/sendEmail";
 
 export class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
@@ -8,6 +9,9 @@ export class CreateUserUseCase {
     if (userExist) {
       throw new Error("Email already exists");
     }
+    // todoo amanha eu faço
+    sendEmail(email, name);
+
     const user = await this.userRepository.create(email, name);
     return { user };
   }
@@ -21,6 +25,3 @@ type Input = {
 type Output = {
   user: User;
 };
-function sendEmail() {
-  throw new Error("Function not implemented.");
-}
