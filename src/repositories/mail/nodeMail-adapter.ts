@@ -1,5 +1,6 @@
 import { MailRepository } from "@/interface/mail-repository";
 import { Transporter, createTransport } from "nodemailer";
+import "dotenv/config";
 
 export class MailAdapter implements MailRepository {
   private transporter: Transporter;
@@ -9,8 +10,8 @@ export class MailAdapter implements MailRepository {
       port: 587,
       secure: false,
       auth: {
-        user: "projectbyyan@outlook.com",
-        pass: "Generalcomms",
+        user: process.env.MAIL_LOGIN,
+        pass: process.env.MAIL_PASSWORD,
       },
     });
   }
