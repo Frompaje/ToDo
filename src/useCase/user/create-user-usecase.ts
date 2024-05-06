@@ -1,5 +1,6 @@
 import { MailRepository } from "@/interface/mail-repository";
 import { User, UserRepository } from "@/interface/user-repository";
+import { token } from "@/repositories/mail/token";
 
 export class CreateUserUseCase {
   constructor(
@@ -15,7 +16,7 @@ export class CreateUserUseCase {
 
     const user = await this.userRepository.create(email, name);
 
-    await this.mailRepository.send(email, 666999);
+    await this.mailRepository.send(email, token());
 
     return { user };
   }
