@@ -1,8 +1,9 @@
 import { app } from "./app";
+import { env } from "./controllers/env";
 
 app.listen(
   {
-    port: 3333,
+    port: env.PORT,
   },
   () => {
     console.log("Server is running on port 3333");
