@@ -14,6 +14,7 @@ export async function getTaskController(
     });
 
     const { userId } = taskSchema.parse(request.params);
+
     const taskRepository = new PrismaTaskRepository();
     const userRepository = new PrismaUserRepository();
 
