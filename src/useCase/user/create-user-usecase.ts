@@ -1,10 +1,10 @@
-import { EmailTokenManageInterface } from "@/interface/EmailTokenManage-interface";
+import { MailRepository } from "@/interface/mail-repository";
 import { User, UserRepository } from "@/interface/user-repository";
 
 export class CreateUserUseCase {
   constructor(
     private userRepository: UserRepository,
-    private emailTokenManageInterface: EmailTokenManageInterface
+    private mailRepository: MailRepository
   ) {}
 
   async execute({ email, name }: Input): Promise<Output> {
@@ -14,6 +14,9 @@ export class CreateUserUseCase {
     }
 
     const user = await this.userRepository.create(email, name);
+
+    await this.mailRepository.send(email, 666999);
+
     return { user };
   }
 }

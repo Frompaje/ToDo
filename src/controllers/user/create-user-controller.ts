@@ -1,3 +1,4 @@
+import { MailAdapter } from "@/repositories/mail/nodeMail-adapter";
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
 import { CreateUserUseCase } from "@/useCase/user/create-user-usecase";
 import { FastifyReply, FastifyRequest } from "fastify";
@@ -15,9 +16,10 @@ export async function createUserController(
 
   try {
     const { email, name } = userSchema.parse(request.body);
-    const userRepository = new PrismaUserRepository();
-    const createUseCase = new CreateUserUseCase(userRepository);
 
+    const userRepository = new PrismaUserRepository();
+    const mailRepository = new MailAdapter();
+    const createUseCase = new CreateUserUseCase(userRepository, mailRepository);
     const { user } = await createUseCase.execute({ email, name });
 
     return reply.status(201).send(user);
