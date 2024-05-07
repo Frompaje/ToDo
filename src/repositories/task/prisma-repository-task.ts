@@ -2,28 +2,29 @@ import { prisma } from "@/database/db";
 import { Task, TaskResitory } from "@/interface/task-repository";
 
 export class PrismaTaskRepository implements TaskResitory {
-  async findById(id: string): Promise<any> {
+  async findById(userId: string): Promise<any> {
     const user = await prisma.task.findUnique({
       where: {
-        id,
+        id: userId,
       },
     });
     return user;
   }
 
-  async returnAllTasks(userId: string): Promise<any> {
+  async returnAllTasks(userId: string): Promise<Task[]> {
     const task = await prisma.task.findMany({
       where: {
-        userId,
+        userId: userId,
       },
     });
     return task;
   }
+
   async create(
+    userId: string,
     title: string,
     description: string,
-    status: string,
-    userId: string
+    status: string
   ): Promise<Task> {
     const task = await prisma.task.create({
       data: {

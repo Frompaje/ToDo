@@ -4,7 +4,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 import { z } from "zod";
 
-export async function getUserController(
+export async function getRefreshUserController(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
@@ -16,10 +16,10 @@ export async function getUserController(
 
     const userRepository = new PrismaUserRepository();
     const userUsecase = new getUserUserUseCase(userRepository);
-    // request.user.sub
-    const user = await userUsecase.execute(id);
 
-    return reply.status(200).send(user);
+    await userUsecase.execute(id);
+
+    return reply.status(200).send(request.user.sub);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);

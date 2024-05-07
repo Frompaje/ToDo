@@ -14,7 +14,6 @@ export async function deleteTaskController(
   });
 
   const { userId, taskId } = taskSchema.parse(request.body);
-
   try {
     const taskRepository = new PrismaTaskRepository();
     const userRepository = new PrismaUserRepository();

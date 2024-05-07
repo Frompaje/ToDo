@@ -7,18 +7,19 @@ export class CreateTaskUseCase {
     private userRepository: UserRepository
   ) {}
 
-  async execute({ title, description, status, userId }: Input) {
+  async execute({ userId, title, description, status }: Input) {
     const userExist = await this.userRepository.findById(userId);
     if (!userExist) {
       throw new Error("User does not exist");
     }
 
     const task = await this.taskRepository.create(
+      userId,
       title,
       description,
-      status,
-      userId
+      status
     );
+
     return task;
   }
 }

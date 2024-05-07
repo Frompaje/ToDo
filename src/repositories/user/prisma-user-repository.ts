@@ -3,7 +3,7 @@ import { UserRepository } from "@/interface/user-repository";
 
 export class PrismaUserRepository implements UserRepository {
   async findById(id: string) {
-    const userExist = await prisma.user.findFirst({
+    const userExist = await prisma.user.findUnique({
       where: { id },
     });
 

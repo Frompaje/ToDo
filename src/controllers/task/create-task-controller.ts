@@ -10,20 +10,22 @@ export async function createTaskController(
 ) {
   try {
     const taskSchema = z.object({
-      id: z.string(),
+      userId: z.string(),
       title: z.string(),
       description: z.string(),
       status: z.string(),
     });
 
-    const { title, description, status, id } = taskSchema.parse(request.body);
+    const { title, description, status, userId } = taskSchema.parse(
+      request.body
+    );
 
     const taskRepository = new PrismaTaskRepository();
     const userRepository = new PrismaUserRepository();
     const createTask = new CreateTaskUseCase(taskRepository, userRepository);
 
     const task = await createTask.execute({
-      userId: id,
+      userId,
       title,
       description,
       status,
