@@ -16,10 +16,18 @@ export async function getUserController(
 
     const userRepository = new PrismaUserRepository();
     const userUsecase = new getUserUserUseCase(userRepository);
-    // request.user.sub
     const user = await userUsecase.execute(id);
 
-    return reply.status(200).send(user);
+    const token = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: user.id,
+        },
+      }
+    );
+
+    return reply.status(200).send({ user, token });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);

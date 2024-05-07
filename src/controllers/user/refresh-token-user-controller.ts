@@ -13,13 +13,11 @@ export async function getRefreshUserController(
   });
   try {
     const { id } = userSchema.parse(request.params);
-
     const userRepository = new PrismaUserRepository();
     const userUsecase = new getUserUserUseCase(userRepository);
 
     await userUsecase.execute(id);
-
-    return reply.status(200).send(request.user.sub);
+    return reply.status(200).send(id);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);

@@ -14,9 +14,9 @@ export class DeleteUserUseCase {
     if (!userExist) {
       throw new Error("User does not exist");
     }
-    const taskExist = await this.taskRepository.returnAllTasks(id);
 
-    taskExist.map(async (tasks) => {
+    const taks = await this.taskRepository.returnAllTasks(id);
+    taks.map(async (tasks) => {
       return await this.taskRepository.delete(tasks.userId, tasks.id);
     });
 
