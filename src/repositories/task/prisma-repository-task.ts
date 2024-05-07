@@ -47,6 +47,15 @@ export class PrismaTaskRepository implements TaskResitory {
     return task;
   }
 
+  async deleteMany(userId: string): Promise<any> {
+    const task = await prisma.task.deleteMany({
+      where: {
+        userId,
+      },
+    });
+    return task;
+  }
+
   async update(
     userId: string,
     taskId: string,

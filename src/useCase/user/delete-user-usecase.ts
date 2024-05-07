@@ -1,6 +1,5 @@
 import { TaskResitory } from "@/interface/task-repository";
 import { User, UserRepository } from "@/interface/user-repository";
-import { Task } from "@prisma/client";
 
 export class DeleteUserUseCase {
   constructor(
@@ -15,10 +14,7 @@ export class DeleteUserUseCase {
       throw new Error("User does not exist");
     }
 
-    const taks = await this.taskRepository.returnAllTasks(id);
-    taks.map(async (tasks) => {
-      return await this.taskRepository.delete(tasks.userId, tasks.id);
-    });
+    await this.taskRepository.deleteMany(id);
 
     const user = await this.userRepository.delete(id);
     return { user };

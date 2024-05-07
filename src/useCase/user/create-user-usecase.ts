@@ -9,26 +9,13 @@ export class CreateUserUseCase {
     private mailRepository: MailRepository
   ) {}
 
-  async execute({ email, name, reply }: Input): Promise<Output> {
+  async execute({ email, name }: Input): Promise<Output> {
     const userExist = await this.userRepository.findByEmail(email);
     if (userExist) {
       throw new Error("Email already exists");
     }
 
     const user = await this.userRepository.create(email, name);
-
-    const tokenValidated = await reply.jwtSign(
-      {},
-      {
-        sign: {
-          sub: user.id,
-        },
-      }
-    );
-    if (!tokenValidated) {
-      throw new Error("Token not exists");
-    }
-    console.log(tokenValidated);
 
     await this.mailRepository.send(email, token());
 
@@ -39,7 +26,6 @@ export class CreateUserUseCase {
 type Input = {
   email: string;
   name: string;
-  reply: FastifyReply;
 };
 
 type Output = {

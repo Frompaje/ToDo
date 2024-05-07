@@ -1,27 +1,22 @@
-import { MailAdapter } from "@/repositories/mail/nodeMail-adapter";
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
-import { CreateUserUseCase } from "@/useCase/user/create-user-usecase";
+import { GetUserUserUseCase } from "@/useCase/user/get-user-usecase";
 import { FastifyReply, FastifyRequest } from "fastify";
 
 import { z } from "zod";
 
-export async function createUserController(
+export async function loginUserController(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
   const userSchema = z.object({
-    email: z.string().email(),
-    name: z.string().min(2).max(30),
+    id: z.string(),
   });
-
   try {
-    const { email, name } = userSchema.parse(request.body);
+    const { id } = userSchema.parse(request.params);
 
     const userRepository = new PrismaUserRepository();
-    const mailRepository = new MailAdapter();
-    const createUseCase = new CreateUserUseCase(userRepository, mailRepository);
-
-    const { user } = await createUseCase.execute({ email, name });
+    const userUsecase = new GetUserUserUseCase(userRepository);
+    const user = await userUsecase.execute(id);
 
     const token = await reply.jwtSign(
       {},
@@ -31,7 +26,8 @@ export async function createUserController(
         },
       }
     );
-    return reply.status(201).send({ token, user });
+
+    return reply.status(200).send({ user, token });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);

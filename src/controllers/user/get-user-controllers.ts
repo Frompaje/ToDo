@@ -1,5 +1,5 @@
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
-import { getUserUserUseCase } from "@/useCase/user/get-user-usecase";
+import { GetUserUserUseCase } from "@/useCase/user/get-user-usecase";
 import { FastifyReply, FastifyRequest } from "fastify";
 
 import { z } from "zod";
@@ -15,7 +15,7 @@ export async function getUserController(
     const { id } = userSchema.parse(request.params);
 
     const userRepository = new PrismaUserRepository();
-    const userUsecase = new getUserUserUseCase(userRepository);
+    const userUsecase = new GetUserUserUseCase(userRepository);
     const user = await userUsecase.execute(id);
 
     const token = await reply.jwtSign(

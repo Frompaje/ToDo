@@ -12,6 +12,8 @@ export interface TaskResitory {
 
   delete(userId: string, taskId: string): Promise<Task>;
 
+  deleteMany(userId: string): Promise<any>;
+
   update(
     userId: string,
     taskId: string,
