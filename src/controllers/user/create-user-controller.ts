@@ -21,7 +21,7 @@ export async function createUserController(
     const mailRepository = new MailAdapter();
     const createUseCase = new CreateUserUseCase(userRepository, mailRepository);
 
-    const { user } = await createUseCase.execute({ email, name });
+    const { user } = await createUseCase.execute({ email, name, reply });
 
     const token = await reply.jwtSign(
       {},
@@ -31,8 +31,7 @@ export async function createUserController(
         },
       }
     );
-
-    return reply.status(201).send({ token });
+    return reply.status(201).send({ token, user });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);
