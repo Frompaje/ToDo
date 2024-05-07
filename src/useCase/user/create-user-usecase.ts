@@ -9,25 +9,17 @@ export class CreateUserUseCase {
     private mailRepository: MailRepository
   ) {}
 
-  async execute({ email, name }: Input): Promise<Output> {
+  async execute({ email }: Input): Promise<any> {
     const userExist = await this.userRepository.findByEmail(email);
     if (userExist) {
       throw new Error("Email already exists");
     }
 
-    const user = await this.userRepository.create(email, name);
-
     await this.mailRepository.send(email, token());
-
-    return { user };
   }
 }
 
 type Input = {
   email: string;
   name: string;
-};
-
-type Output = {
-  user: User;
 };

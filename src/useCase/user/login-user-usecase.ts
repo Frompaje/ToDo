@@ -1,15 +1,24 @@
+import { TaskResitory } from "@/interface/task-repository";
 import { UserRepository } from "@/interface/user-repository";
 import { token } from "@/repositories/mail/token";
+import { PrismaTaskRepository } from "@/repositories/task/prisma-repository-task";
 import { User } from "@prisma/client";
+import { error } from "console";
 
 export class LoginUserUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private taskRepository: TaskResitory
+  ) {}
 
-  async execute(id: string): Promise<any> {
-    const userExist = await this.userRepository.findById(id);
+  async execute(email: string, token: string): Promise<any> {
+    const user = await this.userRepository.findByEmail(email);
 
-    const valitaedToken = token();
-    console.log(valitaedToken);
-    return userExist;
+    if (!user) {
+      throw new Error("Email does not exist");
+    }
+    const tasks = await this.taskRepository.returnAllTasks(user.id);
+
+    return tasks;
   }
 }

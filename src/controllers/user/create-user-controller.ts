@@ -23,15 +23,7 @@ export async function createUserController(
 
     const { user } = await createUseCase.execute({ email, name });
 
-    const token = await reply.jwtSign(
-      {},
-      {
-        sign: {
-          sub: user.id,
-        },
-      }
-    );
-    return reply.status(201).send({ token, user });
+    return reply.status(201).send(user);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);
