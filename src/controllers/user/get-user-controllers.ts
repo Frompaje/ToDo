@@ -22,7 +22,7 @@ export async function getUserController(
       {},
       {
         sign: {
-          sub: user.id,
+          sub: user?.id,
         },
       }
     );

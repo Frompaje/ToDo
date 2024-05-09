@@ -1,4 +1,5 @@
-import { Task, TaskResitory } from "@/interface/task-repository";
+import { TaskResitory } from "@/interface/task-repository";
+import { Task } from "@/interface/type-task";
 import { UserRepository } from "@/interface/user-repository";
 
 export class GetTaskUseCase {
@@ -7,8 +8,9 @@ export class GetTaskUseCase {
     private userRepository: UserRepository
   ) {}
 
-  async execute(userId: string): Promise<Task> {
+  async execute(userId: string): Promise<Task[]> {
     const userExist = await this.userRepository.findById(userId);
+
     if (!userExist) {
       throw new Error("User does not exist");
     }

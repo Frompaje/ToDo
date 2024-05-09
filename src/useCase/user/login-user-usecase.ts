@@ -1,5 +1,6 @@
 import { TaskResitory } from "@/interface/task-repository";
 import { UserRepository } from "@/interface/user-repository";
+import { Task } from "@prisma/client";
 
 export class LoginUserUserUseCase {
   constructor(
@@ -7,7 +8,7 @@ export class LoginUserUserUseCase {
     private taskRepository: TaskResitory
   ) {}
 
-  async execute(email: string, token: string): Promise<any> {
+  async execute(email: string, token: string): Promise<Task[]> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {

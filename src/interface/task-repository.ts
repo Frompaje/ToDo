@@ -1,7 +1,8 @@
-export interface TaskResitory {
-  returnAllTasks(userId: string): Promise<Task[]>;
+import { Task } from "./type-task";
 
-  findById(userId: string): Promise<Task>;
+export interface TaskResitory {
+  findById(taskId: string): Promise<Task | undefined>;
+  returnAllTasks(userId: string): Promise<Task[]>;
 
   create(
     userId: string,
@@ -12,7 +13,7 @@ export interface TaskResitory {
 
   delete(userId: string, taskId: string): Promise<Task>;
 
-  deleteMany(userId: string): Promise<any>;
+  deleteMany(userId: string): Promise<Task>;
 
   update(
     userId: string,
@@ -22,13 +23,3 @@ export interface TaskResitory {
     status: string
   ): Promise<Task>;
 }
-
-export type Task = {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  created_at: Date;
-  updated_at: Date;
-  userId: string;
-};

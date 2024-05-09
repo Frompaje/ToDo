@@ -1,13 +1,8 @@
-export interface UserRepository {
-  create(email: string, name: string): Promise<User>;
-  delete(id: string): Promise<User>;
-  findByEmail(email: string): Promise<any>;
-  findById(id: string): Promise<User | undefined>;
-}
+import { User } from "./type-user.js";
 
-export type User = {
-  id: string;
-  name: string | null;
-  email: string;
-  created_at: Date;
-};
+export interface UserRepository {
+  create(email: string, name: string): Promise<User | undefined>;
+  delete(id: string): Promise<User | undefined>;
+  findById(id: string): Promise<User | undefined>;
+  findByEmail(email: string): Promise<User | undefined>;
+}

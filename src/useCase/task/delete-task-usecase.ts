@@ -1,4 +1,5 @@
-import { Task, TaskResitory } from "@/interface/task-repository";
+import { TaskResitory } from "@/interface/task-repository";
+import { Task } from "@/interface/type-task";
 import { UserRepository } from "@/interface/user-repository";
 
 export class DeleteTaskUseCase {

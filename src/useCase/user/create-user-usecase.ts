@@ -1,7 +1,7 @@
 import { MailRepository } from "@/interface/mail-repository";
 import { TokenRepository } from "@/interface/token-repository";
+import { User } from "@/interface/type-user";
 import { UserRepository } from "@/interface/user-repository";
-import { token } from "@/repositories/mail/token";
 
 export class CreateUserUseCase {
   constructor(
@@ -10,16 +10,14 @@ export class CreateUserUseCase {
     private tokenRepository: TokenRepository
   ) {}
 
-  async execute({ email }: Input): Promise<any> {
+  async execute({ email }: Input): Promise<User | undefined> {
     const userExist = await this.userRepository.findByEmail(email);
-    console.log(userExist);
     if (userExist) {
       throw new Error("Email already exists");
     }
+    const user = await this.userRepository.create(email, "Pastor Junior");
 
-    // await this.tokenRepository.saveOTP(userExist.id, token());
-    // await this.mailRepository.send(email, userExist.token);
-    await this.userRepository.create(email, "Pastor Junior");
+    return user || undefined;
   }
 }
 

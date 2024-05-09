@@ -1,5 +1,6 @@
 import { TaskResitory } from "@/interface/task-repository";
-import { User, UserRepository } from "@/interface/user-repository";
+import { User } from "@/interface/type-user";
+import { UserRepository } from "@/interface/user-repository";
 
 export class DeleteUserUseCase {
   constructor(
@@ -7,7 +8,7 @@ export class DeleteUserUseCase {
     private taskRepository: TaskResitory
   ) {}
 
-  async execute(id: string): Promise<Output> {
+  async execute(id: string): Promise<User | undefined> {
     const userExist = await this.userRepository.findById(id);
 
     if (!userExist) {
@@ -16,11 +17,6 @@ export class DeleteUserUseCase {
 
     await this.taskRepository.deleteMany(id);
 
-    const user = await this.userRepository.delete(id);
-    return { user };
+    return await this.userRepository.delete(id);
   }
 }
-
-type Output = {
-  user: User;
-};

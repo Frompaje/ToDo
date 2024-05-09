@@ -14,7 +14,6 @@ export async function loginUserController(
   });
   try {
     const { id, email } = userSchema.parse(request.params);
-    console.log(id), email;
     const userRepository = new PrismaUserRepository();
 
     return reply.status(200).send();
