@@ -20,12 +20,13 @@ model Task {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  name           String?
-  email          String   @unique
-  created_at     DateTime @default(now())
-  token          String
-  tokenExpiresAt DateTime
+  id         String   @id @default(uuid())
+  name       String?
+  email      String   @unique
+  created_at DateTime @default(now())
 
   Task Task[]
+
+  token          String?
+  tokenExpiresAt DateTime?
 }

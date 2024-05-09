@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 export class GetUserUserUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(id: string): Promise<User> {
+  async execute(id: string): Promise<any> {
     const userExist = await this.userRepository.findById(id);
 
     if (!userExist) {

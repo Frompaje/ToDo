@@ -1,7 +1,7 @@
 export interface UserRepository {
   create(email: string, name: string): Promise<User>;
   delete(id: string): Promise<User>;
-  findByEmail(email: string): Promise<User | undefined>;
+  findByEmail(email: string): Promise<any>;
   findById(id: string): Promise<User | undefined>;
 }
 

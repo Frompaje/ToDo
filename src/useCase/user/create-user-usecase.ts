@@ -11,13 +11,14 @@ export class CreateUserUseCase {
   ) {}
 
   async execute({ email }: Input): Promise<any> {
-    const emailExist = await this.userRepository.findByEmail(email);
-    console.log(emailExist);
-    if (emailExist) {
+    const userExist = await this.userRepository.findByEmail(email);
+    console.log(userExist);
+    if (userExist) {
       throw new Error("Email already exists");
     }
 
-    await this.mailRepository.send(email, token());
+    // await this.tokenRepository.saveOTP(userExist.id, token());
+    // await this.mailRepository.send(email, userExist.token);
     await this.userRepository.create(email, "Pastor Junior");
   }
 }
