@@ -1,4 +1,4 @@
-import { PrismaTaskRepository } from "@/repositories/task/prisma-repository-task";
+import { PrismaTaskRepository } from "@/repositories/task/prisma-task-repository";
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
 import { DeleteUserUseCase } from "@/useCase/user/delete-user-usecase";
 import { FastifyReply, FastifyRequest } from "fastify";

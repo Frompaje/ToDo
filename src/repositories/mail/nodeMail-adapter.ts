@@ -1,17 +1,18 @@
 import { MailRepository } from "@/interface/mail-repository";
 import { Transporter, createTransport } from "nodemailer";
 import "dotenv/config";
+import { env } from "process";
 
 export class MailAdapter implements MailRepository {
   private transporter: Transporter;
   constructor() {
     this.transporter = createTransport({
-      host: "imap.secureserver.net",
-      port: 993,
-      secure: true,
+      host: "smtp.office365.com",
+      port: 587,
+      secure: false,
       auth: {
-        user: "contact@helper-recruiter.com",
-        pass: "Bsgbb7M/Nn!b3VD",
+        user: env.MAIL_LOGIN,
+        pass: env.MAIL_PASSWORD,
       },
     });
   }

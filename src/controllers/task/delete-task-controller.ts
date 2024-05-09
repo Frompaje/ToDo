@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { PrismaTaskRepository } from "@/repositories/task/prisma-repository-task";
 import { DeleteTaskUseCase } from "@/useCase/task/delete-task-usecase";
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
+import { PrismaTaskRepository } from "@/repositories/task/prisma-task-repository";
 
 export async function deleteTaskController(
   request: FastifyRequest,

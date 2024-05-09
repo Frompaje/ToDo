@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { PrismaTaskRepository } from "@/repositories/task/prisma-repository-task";
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
 import { CreateTaskUseCase } from "@/useCase/task/create-task-usecase";
+import { PrismaTaskRepository } from "@/repositories/task/prisma-task-repository";
 
 export async function createTaskController(
   request: FastifyRequest,
