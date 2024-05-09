@@ -21,9 +21,9 @@ export async function createUserController(
     const mailRepository = new MailAdapter();
     const createUseCase = new CreateUserUseCase(userRepository, mailRepository);
 
-    const { user } = await createUseCase.execute({ email, name });
+    await createUseCase.execute({ email, name });
 
-    return reply.status(201).send(user);
+    return reply.status(201).send();
   } catch (error) {
     if (error instanceof z.ZodError) {
       return reply.status(400).send(error.issues);

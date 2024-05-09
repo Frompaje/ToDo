@@ -1,7 +1,6 @@
 import { MailRepository } from "@/interface/mail-repository";
-import { User, UserRepository } from "@/interface/user-repository";
+import { UserRepository } from "@/interface/user-repository";
 import { token } from "@/repositories/mail/token";
-import { FastifyReply } from "fastify";
 
 export class CreateUserUseCase {
   constructor(
@@ -16,6 +15,7 @@ export class CreateUserUseCase {
     }
 
     await this.mailRepository.send(email, token());
+    await this.userRepository.create(email, "Pastor Junior");
   }
 }
 
