@@ -3,6 +3,6 @@ export type User = {
   name: string | null;
   email: string;
   created_at: Date;
-  token: string | null;
+  token: number | null;
   tokenExpiresAt: Date | null;
 };

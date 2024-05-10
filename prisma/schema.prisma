@@ -25,8 +25,7 @@ model User {
   email      String   @unique
   created_at DateTime @default(now())
 
-  Task Task[]
-
-  token          String?
+  token          Int?
   tokenExpiresAt DateTime?
+  Task           Task[]
 }
