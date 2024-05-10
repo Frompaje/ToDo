@@ -4,5 +4,5 @@ export type User = {
   email: string;
   created_at: Date;
   token: number;
-  tokenExpiresAt: Date;
+  tokenExpiresAt: Date | null;
 };

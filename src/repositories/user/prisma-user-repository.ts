@@ -47,11 +47,4 @@ export class PrismaUserRepository implements UserRepository {
     });
     return user;
   }
-
-  async deleteToken(id: string, token: number): Promise<User> {
-    const user = await prisma.user.delete({
-      where: { id, token },
-    });
-    return user;
-  }
 }

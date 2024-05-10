@@ -1,3 +1,5 @@
+import { MailAdapter } from "@/repositories/mail/nodeMail-adapter";
+import { PrismaTokenRepository } from "@/repositories/token/prisma-token-repository";
 import { PrismaUserRepository } from "@/repositories/user/prisma-user-repository";
 import { LoginUserUserUseCase } from "@/useCase/user/login-user-usecase";
 import { FastifyReply, FastifyRequest } from "fastify";
@@ -16,7 +18,14 @@ export async function loginUserController(
     const { email, token } = userSchema.parse(request.body);
 
     const userRepository = new PrismaUserRepository();
-    const loginUseCase = new LoginUserUserUseCase(userRepository);
+    const tokenRepository = new PrismaTokenRepository();
+    const sendRepository = new MailAdapter();
+
+    const loginUseCase = new LoginUserUserUseCase(
+      userRepository,
+      tokenRepository,
+      sendRepository
+    );
 
     const user = await loginUseCase.execute(email, token);
 

@@ -26,6 +26,6 @@ model User {
   created_at DateTime @default(now())
 
   token          Int
-  tokenExpiresAt DateTime
+  tokenExpiresAt DateTime?
   Task           Task[]
 }

@@ -1,29 +1,44 @@
+import { TokenRepository } from "@/interface/token-repository";
 import { User } from "@/interface/type-user";
 import { UserRepository } from "@/interface/user-repository";
+import { MailAdapter } from "@/repositories/mail/nodeMail-adapter";
+import { tokenRandom } from "@/repositories/mail/token";
 
 export class LoginUserUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private tokenRepository: TokenRepository,
+    private emailRepository: MailAdapter
+  ) {}
 
   async execute(email: string, token: number): Promise<User> {
     const userExist = await this.userRepository.findByEmail(email);
 
-    if (!userExist) {
-      throw new Error("Email does not exist");
+    if (!userExist.email || !userExist.token) {
+      throw new Error("Email or Token does not exist");
     }
 
-    const user = await this.userRepository.findById(userExist.id);
-
-    if (token != user.token || !user.token) {
+    if (token != userExist.token) {
       throw new Error("Unauthenticated token");
     }
 
-    const tokenTime = user.tokenExpiresAt?.getTime();
-    const TokenComparation = new Date().getTime();
+    const TokenTimeNow = new Date().getTime();
+    const tokenExperesTimeFiveMinuts = userExist.tokenExpiresAt?.getTime();
 
-    if (TokenComparation > tokenTime) {
-      console.log("true");
+    if (!tokenExperesTimeFiveMinuts) {
+      throw new Error("Token is not defined");
     }
 
-    return user;
+    if (TokenTimeNow > tokenExperesTimeFiveMinuts) {
+      const newTokenTime = await this.tokenRepository.saveOTP(
+        tokenRandom(),
+        userExist.id
+      );
+
+      await this.emailRepository.send(email, newTokenTime.token);
+      throw new Error("Token time expired ");
+    }
+
+    return userExist;
   }
 }
