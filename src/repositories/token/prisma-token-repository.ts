@@ -4,7 +4,8 @@ import { User } from "@/interface/type-user";
 
 export class PrismaTokenRepository implements TokenRepository {
   async saveOTP(token: number, id: string): Promise<User> {
-    const fiveMinutesInSecondFuture = Date.now() + 1000 * 60 * 5;
+    const fiveMinutesInSecondFuture = Date.now() + 1000 * 60;
+
     return prisma.user.update({
       where: {
         id,

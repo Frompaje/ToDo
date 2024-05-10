@@ -1,6 +1,7 @@
 import { prisma } from "@/database/db";
 import { User } from "@/interface/type-user";
 import { UserRepository } from "@/interface/user-repository";
+import { userInfo } from "os";
 
 export class PrismaUserRepository implements UserRepository {
   async findById(id: string): Promise<User> {
@@ -43,6 +44,13 @@ export class PrismaUserRepository implements UserRepository {
       where: {
         id,
       },
+    });
+    return user;
+  }
+
+  async deleteToken(id: string, token: number): Promise<User> {
+    const user = await prisma.user.delete({
+      where: { id, token },
     });
     return user;
   }

@@ -20,6 +20,7 @@ export class CreateUserUseCase {
     await this.mailRepository.send(email, user.token);
 
     await this.tokenRepository.saveOTP(user.token, user.id);
+    console.log(new Date());
 
     return user;
   }
