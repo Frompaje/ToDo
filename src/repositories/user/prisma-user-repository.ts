@@ -1,7 +1,6 @@
 import { prisma } from "@/database/db";
 import { User } from "@/interface/type-user";
 import { UserRepository } from "@/interface/user-repository";
-import { userInfo } from "os";
 
 export class PrismaUserRepository implements UserRepository {
   async findById(id: string): Promise<User> {
