@@ -21,11 +21,11 @@ model Task {
 
 model User {
   id         String   @id @default(uuid())
-  name       String?
+  name       String   @default("User")
   email      String   @unique
   created_at DateTime @default(now())
 
-  token          Int?
-  tokenExpiresAt DateTime?
+  token          Int
+  tokenExpiresAt DateTime
   Task           Task[]
 }

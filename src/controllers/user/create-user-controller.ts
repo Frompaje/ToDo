@@ -12,7 +12,7 @@ export async function createUserController(
 ) {
   const userSchema = z.object({
     email: z.string().email(),
-    name: z.string().min(2).max(30),
+    name: z.string().min(2).max(30).default("User"),
   });
 
   try {

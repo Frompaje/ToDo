@@ -1,8 +1,8 @@
 export type User = {
   id: string;
-  name: string | null;
+  name: string;
   email: string;
   created_at: Date;
-  token: number | null;
-  tokenExpiresAt: Date | null;
+  token: number;
+  tokenExpiresAt: Date;
 };
