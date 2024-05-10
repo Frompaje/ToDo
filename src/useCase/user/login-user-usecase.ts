@@ -22,14 +22,14 @@ export class LoginUserUserUseCase {
       throw new Error("Unauthenticated token");
     }
 
-    const TokenTimeNow = new Date().getTime();
-    const tokenExperesTimeFiveMinuts = userExist.tokenExpiresAt?.getTime();
+    const currentTime = new Date().getTime();
+    const tokenTimestamp = userExist.tokenExpiresAt?.getTime();
 
-    if (!tokenExperesTimeFiveMinuts) {
+    if (!tokenTimestamp) {
       throw new Error("Token is not defined");
     }
 
-    if (TokenTimeNow > tokenExperesTimeFiveMinuts) {
+    if (currentTime > tokenTimestamp) {
       const newTokenTime = await this.tokenRepository.saveOTP(
         tokenRandom(),
         userExist.id
